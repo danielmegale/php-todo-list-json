@@ -2,7 +2,20 @@ const {createApp} =Vue;
 const app =createApp({
     data(){
         return{
-            tasks:[]
+            tasks:[],
+            newTask:'',
+        }
+    },
+    methods:{
+        addTask(){
+            const data = {task: this.newTask};
+            const config = {headers: {'Content-Type': 'multipart/form-data'}}
+
+            axios.post('http://localhost/php-todo-list-json/api/',data,config)  
+            .then(res => {
+                this.tasks.push(res.data);
+                this.newTask= '' ;
+            });
         }
     },
     created(){
